@@ -4,7 +4,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <name>cordova-plugin-auto</name>
     <js-module name="auto" src="www/auto.js">
-        <clobbers target="window.auto" />
+        <clobbers target="window.Auto" />
     </js-module>
     <platform name="android">
         <config-file parent="/*" target="res/xml/config.xml">
@@ -12,8 +12,23 @@
                 <param name="android-package" value="com.okode.cordova.auto.CDVAuto" />
             </feature>
         </config-file>
-        <config-file parent="/*" target="AndroidManifest.xml" />
+        <config-file parent="/*" target="AndroidManifest.xml">
+            <meta-data android:name="com.google.android.gms.car.application" android:resource="@xml/automotive_app_desc" />
+            <receiver android:name="com.okode.cordova.auto.MessageReadReceiver" android:exported="false">
+                <intent-filter>
+                    <action android:name="com.okode.cordova.auto.ACTION_MESSAGE_READ"/>
+                </intent-filter>
+            </receiver>
+            <receiver android:name="com.okode.cordova.auto.MessageReplyReceiver" android:exported="false">
+                <intent-filter>
+                    <action android:name="com.okode.cordova.auto.ACTION_MESSAGE_REPLY"/>
+                </intent-filter>
+            </receiver>
+        </config-file>
         <source-file src="src/android/CDVAuto.java" target-dir="src/com/okode/cordova/auto" />
+        <source-file src="src/android/res/xml/automotive_app_desc.xml" target-dir="res/xml"/>
+
+        <framework src="src/android/build-extras.gradle" custom="true" type="gradleReference" />
     </platform>
     <platform name="ios">
         <config-file parent="/*" target="config.xml">
