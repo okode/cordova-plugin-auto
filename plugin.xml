@@ -12,7 +12,7 @@
                 <param name="android-package" value="com.okode.cordova.auto.CDVAuto" />
             </feature>
         </config-file>
-        <config-file parent="/*" target="AndroidManifest.xml">
+        <config-file parent="/manifest/application" target="AndroidManifest.xml">
             <meta-data android:name="com.google.android.gms.car.application" android:resource="@xml/automotive_app_desc" />
             <receiver android:name="com.okode.cordova.auto.MessageReadReceiver" android:exported="false">
                 <intent-filter>
