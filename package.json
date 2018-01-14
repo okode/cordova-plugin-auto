@@ -1,0 +1,27 @@
+{
+  "name": "cordova-plugin-auto",
+  "version": "0.1.0",
+  "description": "",
+  "cordova": {
+    "id": "cordova-plugin-auto",
+    "platforms": [
+      "android",
+      "ios"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/okode/cordova-plugin-auto.git"
+  },
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-android",
+    "cordova-ios"
+  ],
+  "author": "Okode",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/okode/cordova-plugin-auto/issues"
+  },
+  "homepage": "https://github.com/okode/cordova-plugin-auto#readme"
+}
