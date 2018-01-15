@@ -1,5 +1,9 @@
 var exec = require('cordova/exec');
 
-exports.coolMethod = function (arg0, success, error) {
-    exec(success, error, 'Auto', 'coolMethod', [arg0]);
+exports.sendMessage = function (conversationId, from, message, success, error) {
+    exec(success, error, 'Auto', 'sendMessage', [conversationId, from, message]);
+};
+
+exports.isCarUIMode = function (conversationId, from, message, success, error) {
+    exec(success, error, 'Auto', 'isCarUIMode', []);
 };
