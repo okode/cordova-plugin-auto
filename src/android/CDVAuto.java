@@ -20,9 +20,6 @@ import android.util.Log;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-/**
- * This class echoes a string called from JavaScript.
- */
 public class CDVAuto extends CordovaPlugin {
 
     private final static String TAG = CDVAuto.class.getSimpleName();
@@ -57,9 +54,10 @@ public class CDVAuto extends CordovaPlugin {
             return;
         }
 
-        String replyLabel = cordova.getActivity().getString(getAppResource("notification_reply", "string"));
+        //String replyLabel = cordova.getActivity().getString(getAppResource("notification_reply", "string"));
         RemoteInput remoteInput = new RemoteInput.Builder(MessageReplyReceiver.REPLY_KEY)
-                .setLabel(replyLabel).build();
+                //.setLabel(replyLabel)
+                .build();
         UnreadConversation.Builder unreadConvBuilder = new UnreadConversation.Builder(from)
                         .setReadPendingIntent(getMsgReadPendingIntent(conversationId))
                         .setReplyAction(getMsgReplyPendingIntent(conversationId), remoteInput);
