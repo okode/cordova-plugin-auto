@@ -56,16 +56,17 @@ public class CDVAuto extends CordovaPlugin {
 
         //String replyLabel = cordova.getActivity().getString(getAppResource("notification_reply", "string"));
         RemoteInput remoteInput = new RemoteInput.Builder(MessageReplyReceiver.REPLY_KEY)
-                //.setLabel(replyLabel)
+                .setLabel("Respuesta")
                 .build();
         UnreadConversation.Builder unreadConvBuilder = new UnreadConversation.Builder(from)
                         .setReadPendingIntent(getMsgReadPendingIntent(conversationId))
                         .setReplyAction(getMsgReplyPendingIntent(conversationId), remoteInput);
-        unreadConvBuilder.addMessage(message);
+        unreadConvBuilder.addMessage(message).setLatestTimestamp(System.currentTimeMillis());
 
         NotificationCompat.Builder notificationBuilder =
                 new NotificationCompat.Builder(cordova.getActivity().getApplicationContext())
-                        .setSmallIcon(getAppResource("ic_notification", "drawable"));
+                        .setSmallIcon(getAppResource("ic_notification", "drawable"))
+                        .setContentTitle("Nuevo mensaje");
             // TODO Set large icon from sender/from photo
                         //.setLargeIcon(largeIconBitmap);
         notificationBuilder.extend(new NotificationCompat.CarExtender()
