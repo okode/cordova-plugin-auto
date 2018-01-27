@@ -20,7 +20,10 @@ public class MessageReplyReceiver extends BroadcastReceiver {
         // Call JS context to pass the message
         String message = getMessageText(intent);
         if (message != null) {
-            // TODO
+            Log.d(TAG, "Message received from Auto: " + message);
+            CDVAuto.processReply(conversationId, message);
+        } else {
+            Log.d(TAG, "No text message received");
         }
     }
 

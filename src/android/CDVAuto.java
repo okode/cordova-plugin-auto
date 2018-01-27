@@ -12,12 +12,15 @@ import android.support.v4.app.RemoteInput;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CallbackContext;
 
+import org.apache.cordova.PluginResult;
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.support.v4.app.NotificationCompat.CarExtender.*;
 import android.util.Log;
 
+import java.util.Collections;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class CDVAuto extends CordovaPlugin {
@@ -25,9 +28,16 @@ public class CDVAuto extends CordovaPlugin {
     private final static String TAG = CDVAuto.class.getSimpleName();
     // TODO: Get the notificationId from the app
     private final static AtomicInteger notificationId = new AtomicInteger(0);
+    private static CallbackContext listener;
 
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
+
+        if (action.equals("register")) {
+            registerListener(callbackContext);
+            return true;
+        }
+
         if (action.equals("sendMessage")) {
             int conversationId = args.getInt(0);
             String from = args.getString(1);
@@ -42,6 +52,20 @@ public class CDVAuto extends CordovaPlugin {
         }
 
         return false;
+    }
+
+    public static void processReply(int conversationId, String message) {
+        try {
+            PluginResult result = new PluginResult(PluginResult.Status.OK);
+            JSONObject parameter = new JSONObject();
+            parameter.put("conversationId", conversationId);
+            parameter.put("message", message);
+            result.setKeepCallback(true);
+            listener.sendPluginResult(result);
+        } catch (JSONException e) {
+            Log.e(TAG, String.format("Error generating response with id %s and message %s",
+                    conversationId, message), e);
+        }
     }
 
     private void sendMessage(int conversationId, String from, String message, CallbackContext callbackContext) {
@@ -87,6 +111,18 @@ public class CDVAuto extends CordovaPlugin {
         } else {
             Log.d(TAG, "Running on a non-Car mode");
             return false;
+        }
+    }
+
+    private void registerListener(final CallbackContext callbackContext) {
+        if (callbackContext != null) {
+            listener = callbackContext;
+            PluginResult result = new PluginResult(PluginResult.Status.OK);
+            result.setKeepCallback(true);
+            callbackContext.sendPluginResult(result);
+            return;
+        } else {
+            Log.e(TAG,"No callback context!");
         }
     }
 
