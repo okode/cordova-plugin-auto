@@ -8,10 +8,8 @@ exports.isCarUIMode = function (success, error) {
     exec(success, error, 'Auto', 'isCarUIMode', []);
 };
 
-exports.bindDocumentEvent = function() {
-    exec(function(e) {
-      console.log("Message received: " + e.message + " on conversation " + e.conversationId);
-    }, null, "Auto", "register", []);
+exports.register = function(success, error) {
+    exec(success, error, "Auto", "register", []);
 };
 
-document.addEventListener("deviceready", exports.bindDocumentEvent, false);
+document.addEventListener("deviceready", exports.register, false);

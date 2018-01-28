@@ -56,10 +56,10 @@ public class CDVAuto extends CordovaPlugin {
 
     public static void processReply(int conversationId, String message) {
         try {
-            PluginResult result = new PluginResult(PluginResult.Status.OK);
-            JSONObject parameter = new JSONObject();
-            parameter.put("conversationId", conversationId);
-            parameter.put("message", message);
+            JSONObject event = new JSONObject();
+            event.put("conversationId", conversationId);
+            event.put("message", message);
+            PluginResult result = new PluginResult(PluginResult.Status.OK, event);
             result.setKeepCallback(true);
             listener.sendPluginResult(result);
         } catch (JSONException e) {
