@@ -5,8 +5,7 @@
   "cordova": {
     "id": "cordova-plugin-auto",
     "platforms": [
-      "android",
-      "ios"
+      "android"
     ]
   },
   "repository": {
@@ -15,8 +14,7 @@
   },
   "keywords": [
     "ecosystem:cordova",
-    "cordova-android",
-    "cordova-ios"
+    "cordova-android"
   ],
   "author": "Okode",
   "license": "MIT",

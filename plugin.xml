@@ -30,12 +30,4 @@
 
         <framework src="src/android/build-extras.gradle" custom="true" type="gradleReference" />
     </platform>
-    <platform name="ios">
-        <config-file parent="/*" target="config.xml">
-            <feature name="Auto">
-                <param name="ios-package" value="CDVAuto" />
-            </feature>
-        </config-file>
-        <source-file src="src/ios/CDVAuto.m" />
-    </platform>
 </plugin>
