@@ -57,6 +57,7 @@ public class CDVAuto extends CordovaPlugin {
     public static void processReply(int conversationId, String message) {
         try {
             JSONObject event = new JSONObject();
+            event.put("type", "REPLY");
             event.put("conversationId", conversationId);
             event.put("message", message);
             PluginResult result = new PluginResult(PluginResult.Status.OK, event);
@@ -65,6 +66,19 @@ public class CDVAuto extends CordovaPlugin {
         } catch (JSONException e) {
             Log.e(TAG, String.format("Error generating response with id %s and message %s",
                     conversationId, message), e);
+        }
+    }
+
+    public static void processRead(int conversationId) {
+        try {
+            JSONObject event = new JSONObject();
+            event.put("type", "READ");
+            event.put("conversationId", conversationId);
+            PluginResult result = new PluginResult(PluginResult.Status.OK, event);
+            result.setKeepCallback(true);
+            listener.sendPluginResult(result);
+        } catch (JSONException e) {
+            Log.e(TAG, String.format("Error generating read with id %s", conversationId), e);
         }
     }
 
@@ -79,9 +93,7 @@ public class CDVAuto extends CordovaPlugin {
         }
 
         //String replyLabel = cordova.getActivity().getString(getAppResource("notification_reply", "string"));
-        RemoteInput remoteInput = new RemoteInput.Builder(MessageReplyReceiver.REPLY_KEY)
-                .setLabel("Respuesta")
-                .build();
+        RemoteInput remoteInput = new RemoteInput.Builder(MessageReplyReceiver.REPLY_KEY).build();
         UnreadConversation.Builder unreadConvBuilder = new UnreadConversation.Builder(from)
                         .setReadPendingIntent(getMsgReadPendingIntent(conversationId))
                         .setReplyAction(getMsgReplyPendingIntent(conversationId), remoteInput);
@@ -89,10 +101,7 @@ public class CDVAuto extends CordovaPlugin {
 
         NotificationCompat.Builder notificationBuilder =
                 new NotificationCompat.Builder(cordova.getActivity().getApplicationContext())
-                        .setSmallIcon(getAppResource("ic_notification", "drawable"))
-                        .setContentTitle("Nuevo mensaje");
-            // TODO Set large icon from sender/from photo
-                        //.setLargeIcon(largeIconBitmap);
+                        .setSmallIcon(getAppResource("ic_notification", "drawable"));
         notificationBuilder.extend(new NotificationCompat.CarExtender()
                 .setUnreadConversation(unreadConvBuilder.build()));
 
