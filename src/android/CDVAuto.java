@@ -26,7 +26,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class CDVAuto extends CordovaPlugin {
 
     private final static String TAG = CDVAuto.class.getSimpleName();
-    // TODO: Get the notificationId from the app
     private final static AtomicInteger notificationId = new AtomicInteger(0);
     private static CallbackContext listener;
 
