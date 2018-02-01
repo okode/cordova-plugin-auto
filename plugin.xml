@@ -26,6 +26,8 @@
             </receiver>
         </config-file>
         <source-file src="src/android/CDVAuto.java" target-dir="src/com/okode/cordova/auto" />
+        <source-file src="src/android/MessageReadReceiver.java" target-dir="src/com/okode/cordova/auto" />
+        <source-file src="src/android/MessageReplyReceiver.java" target-dir="src/com/okode/cordova/auto" />
         <source-file src="src/android/res/xml/automotive_app_desc.xml" target-dir="res/xml"/>
 
         <framework src="src/android/build-extras.gradle" custom="true" type="gradleReference" />

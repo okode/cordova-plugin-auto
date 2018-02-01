@@ -125,13 +125,20 @@ public class CDVAuto extends CordovaPlugin {
 
     private void registerListener(final CallbackContext callbackContext) {
         if (callbackContext != null) {
-            listener = callbackContext;
-            PluginResult result = new PluginResult(PluginResult.Status.OK);
-            result.setKeepCallback(true);
-            callbackContext.sendPluginResult(result);
-            return;
+            try {
+                listener = callbackContext;
+                JSONObject event = new JSONObject();
+                event.put("type", "REGISTER");
+                PluginResult result = new PluginResult(PluginResult.Status.OK, event);
+                result.setKeepCallback(true);
+                callbackContext.sendPluginResult(result);
+            } catch (JSONException e) {
+                Log.e(TAG, "Error generating register response", e);
+                PluginResult result = new PluginResult(PluginResult.Status.JSON_EXCEPTION);
+                callbackContext.sendPluginResult(result);
+            }
         } else {
-            Log.e(TAG,"No callback context!");
+            Log.e(TAG, "No callback context!");
         }
     }
 
