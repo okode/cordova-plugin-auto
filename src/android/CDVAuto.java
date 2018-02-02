@@ -5,6 +5,7 @@ import android.app.UiModeManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.BitmapFactory;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.app.RemoteInput;
@@ -91,16 +92,18 @@ public class CDVAuto extends CordovaPlugin {
             return;
         }
 
-        //String replyLabel = cordova.getActivity().getString(getAppResource("notification_reply", "string"));
         RemoteInput remoteInput = new RemoteInput.Builder(MessageReplyReceiver.REPLY_KEY).build();
         UnreadConversation.Builder unreadConvBuilder = new UnreadConversation.Builder(from)
                         .setReadPendingIntent(getMsgReadPendingIntent(conversationId))
                         .setReplyAction(getMsgReplyPendingIntent(conversationId), remoteInput);
         unreadConvBuilder.addMessage(message).setLatestTimestamp(System.currentTimeMillis());
 
-        NotificationCompat.Builder notificationBuilder =
-                new NotificationCompat.Builder(cordova.getActivity().getApplicationContext())
-                        .setSmallIcon(getAppResource("ic_notification", "drawable"));
+        int largeIconRes = getAppResource("icon", "mipmap");
+
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(
+                cordova.getActivity().getApplicationContext(), String.valueOf(conversationId))
+                .setLargeIcon(BitmapFactory.decodeResource(cordova.getActivity().getResources(), largeIconRes))
+                .setSmallIcon(getAppResource("ic_notification", "drawable"));
         notificationBuilder.extend(new NotificationCompat.CarExtender()
                 .setUnreadConversation(unreadConvBuilder.build()));
 

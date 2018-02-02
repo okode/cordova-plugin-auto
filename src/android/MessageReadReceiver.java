@@ -18,5 +18,6 @@ public class MessageReadReceiver extends BroadcastReceiver {
         Log.d(TAG, "Conversation ID read: " + conversationId);
 
         NotificationManagerCompat.from(context).cancel(conversationId);
+        CDVAuto.processRead(conversationId);
     }
 }
